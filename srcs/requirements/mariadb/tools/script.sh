@@ -1,4 +1,6 @@
 #!/bin/bash
+
+
 #start mysql
 service mysql start
 

@@ -1,6 +1,13 @@
-#!bin/bash
+#!/bin/bash
 
-sleep 8
+sleep 10
+#install Wordpress-CLI
+if ! wp --allow-root --version; then
+    wget  https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    mv wp-cli.phar /usr/local/bin/wp
+
+fi
 
 if [ ! -e /var/www/wordpress/wp-config.php ]; then
     #create Wordpress configuration
@@ -10,6 +17,10 @@ if [ ! -e /var/www/wordpress/wp-config.php ]; then
     wp user create --allow-root --role=author $AUTHOR_USER $AUTHOR_EMAIL --user_pass=$AUTHOR_PASSWORD --path='/var/www/wordpress'
 
 
+fi
+
+if [ ! -d /run/php ]; then
+    mkdir -p /run/php
 fi
 #start PHP-FPM service in the foreground
 /usr/sbin/php-fpm7.3 -F
