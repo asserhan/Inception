@@ -18,11 +18,23 @@ services:
 
 
 
+  wordpress:
+    imgage: wordpress
+    container_name: wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    env_file: .env
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    expose:
+      - 9000
+    depends_on:
+      - mariadb
+    restart: unless-stopped
   
-
-
-
-
 
 
 
