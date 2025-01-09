@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y wget \
     php7.4 \
     php7.4-fpm \
     php7.4-mysql \
-    php7.4-cli
+    mariadb-client
 
 
 RUN wget https://wordpress.org/latest.tar.gz -P /var/www \
