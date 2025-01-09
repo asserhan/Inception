@@ -14,7 +14,7 @@ services:
       - inception
     expose:
       - 3306 #communication at same network
-    restart: unless-stopped
+    restart: on-failure
 
 
 
@@ -53,7 +53,7 @@ services:
       - wordpress
     networks:
       - inception
-    restart: unless-stopped
+    restart: on-failure
 
 volumes:
 
