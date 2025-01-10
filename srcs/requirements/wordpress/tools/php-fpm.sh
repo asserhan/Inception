@@ -48,6 +48,7 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         --admin_password="$ADMIN_PASSWORD" \
         --admin_email="$ADMIN_EMAIL" \
         --path='/var/www/html' \
+        --skip-email \
        
 
     wp user create --allow-root \
@@ -55,6 +56,8 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         "$AUTHOR_USER" \
         "$AUTHOR_EMAIL" \
         --user_pass="$AUTHOR_PASSWORD" \
-        --path='/var/www/html'
+        --path='/var/www/html' \
+         --skip-email 
+        
 fi
 php-fpm7.4 -F
