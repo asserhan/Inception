@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd /var/www/html/
 # Wait for services to be ready
 sleep 15
 
@@ -11,7 +11,7 @@ find /var/www/html -type f -exec chmod 644 {} \;
 # Install WP-CLI if not installed
 if ! wp --allow-root --version; then
     echo "WP-CLI not found. Installing WP-CLI..."
-    curl -o https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     mv wp-cli.phar /usr/local/bin/wp
     echo "WP-CLI installed successfully."
@@ -39,10 +39,7 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         --dbpass="$SQL_PASSWORD" \
         --dbhost="mariadb" \
         --path='/var/www/html' \
-        --skip-check || {
-            echo "Error: Failed to create wp-config.php. Check your database credentials and environment variables."
-            exit 1
-        }
+    
 
     wp core install --allow-root \
         --url="$DOMAIN_NAME" \
@@ -51,20 +48,13 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         --admin_password="$ADMIN_PASSWORD" \
         --admin_email="$ADMIN_EMAIL" \
         --path='/var/www/html' \
-        --skip-email || {
-            echo "Error: Failed to install WordPress core."
-            exit 1
-        }
+       
 
     wp user create --allow-root \
         --role=author \
         "$AUTHOR_USER" \
         "$AUTHOR_EMAIL" \
         --user_pass="$AUTHOR_PASSWORD" \
-        --path='/var/www/html' || {
-            echo "Error: Failed to create author user."
-            exit 1
-        }
+        --path='/var/www/html'
 fi
-
 php-fpm7.4 -F
