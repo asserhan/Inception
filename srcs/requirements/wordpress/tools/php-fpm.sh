@@ -22,7 +22,8 @@ fi
 # Download WordPress core if not already downloaded
 if [ ! -d /var/www/html/wp-admin ]; then
     echo "Downloading WordPress..."
-    wp core download --allow-root --path='/var/www/html'
+    wp cli cache flush --allow-root
+    wp core download --path='/var/www/html' --allow-root
 fi
 
 
@@ -48,7 +49,6 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         --admin_password="$ADMIN_PASSWORD" \
         --admin_email="$ADMIN_EMAIL" \
         --path='/var/www/html' \
-        --skip-email \
        
 
     wp user create --allow-root \
@@ -57,7 +57,6 @@ if [ ! -e /var/www/html/wp-config.php ]; then
         "$AUTHOR_EMAIL" \
         --user_pass="$AUTHOR_PASSWORD" \
         --path='/var/www/html' \
-         --skip-email 
         
 fi
 php-fpm7.4 -F
