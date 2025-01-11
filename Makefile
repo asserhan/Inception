@@ -1,3 +1,5 @@
+include srcs/.env
+
 all : up
 
 up : 

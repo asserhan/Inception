@@ -2,7 +2,7 @@ version: '3'
 
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:inception_hasserao_v1
     container_name: mariadb
     build:
       context: ./requirements/mariadb
@@ -12,14 +12,14 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - inception
-    expose:
-      - 3306 
+    # expose:
+    #   - 3306 
     restart: on-failure
 
 
 
   wordpress:
-    image: wordpress
+    image: wordpress:inception_hasserao_v1
     container_name: wordpress
     build:
       context: ./requirements/wordpress
@@ -29,8 +29,8 @@ services:
       - wordpress:/var/www/html
     networks:
       - inception
-    expose:
-      - 9000
+    # expose:
+    #   - 9000
     depends_on:
       - mariadb
     restart: on-failure
@@ -39,7 +39,7 @@ services:
 
 
   nginx:
-    image: nginx
+    image: nginx:inception_hasserao_v1
     container_name: nginx
     build:
       context: ./requirements/nginx
@@ -62,13 +62,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/hasserao/data/wordpress
+      device: $WORDPRESS_VOL
   mariadb:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/hasserao/data/mariadb
+      device: $DB_VOL
 
 
 
