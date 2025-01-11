@@ -20,4 +20,4 @@ COPY ./tools/php-fpm.sh /php-fpm.sh
 
 RUN chmod +x /php-fpm.sh
 
-ENTRYPOINT ["/php-fpm.sh"]
+CMD ["/php-fpm.sh"]

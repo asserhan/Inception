@@ -1,14 +1,14 @@
 #!/bin/bash
 cd /var/www/html/
-# Wait for services to be ready
+
 sleep 15
 
-# Set ownership and permissions for WordPress files
+
 chown -R www-data:www-data /var/www/html
 find /var/www/html -type d -exec chmod 755 {} \;
 find /var/www/html -type f -exec chmod 644 {} \;
 
-# Install WP-CLI if not installed
+
 if ! wp --allow-root --version; then
     echo "WP-CLI not found. Installing WP-CLI..."
     wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
@@ -19,11 +19,10 @@ else
     echo "WP-CLI is already installed."
 fi
 
-# Download WordPress core if not already downloaded
+
 if [ ! -d /var/www/html/wp-admin ]; then
     echo "Downloading WordPress..."
-    wp cli cache flush --allow-root
-    wp core download --path='/var/www/html' --allow-root
+    wp core download --allow-root --path='/var/www/html'
 fi
 
 
