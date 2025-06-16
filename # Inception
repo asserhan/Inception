@@ -1,0 +1,85 @@
+# Inception
+
+A Docker-based project that sets up a WordPress website with MariaDB and Nginx using custom Docker images.
+
+## Project Structure
+
+```
+Makefile
+srcs/
+  .env
+  docker-compose.yml
+  requirements/
+    mariadb/
+      .dockerignore
+      Dockerfile
+      conf/
+        50-server.cnf
+      tools/
+        script.sh
+    nginx/
+      .dockerignore
+      Dockerfile
+      conf/
+        nginx.conf
+    wordpress/
+      .dockerignore
+      Dockerfile
+      conf/
+        www.conf
+      tools/
+        php-fpm.sh
+```
+
+## Services
+
+- **MariaDB**: Database service for WordPress.
+- **WordPress**: PHP-FPM container running WordPress.
+- **Nginx**: Web server serving WordPress over HTTPS.
+
+## Usage
+
+### 1. Build and Run
+
+```sh
+make
+```
+
+or
+
+```sh
+docker-compose -f ./srcs/docker-compose.yml up --build
+```
+
+### 2. Stop and Remove Containers
+
+```sh
+make down
+```
+
+or
+
+```sh
+docker-compose -f ./srcs/docker-compose.yml down -v
+```
+
+### 3. Rebuild
+
+```sh
+make re
+```
+
+## Configuration
+
+- Environment variables are set in [`srcs/.env`](srcs/.env).
+- Custom configuration files for each service are in their respective `conf/` directories.
+
+## Notes
+
+- Nginx serves the site over HTTPS using a self-signed certificate.
+- WordPress and MariaDB data are persisted using Docker volumes.
+- Services are connected via a custom Docker network.
+
+## Authors
+
+- swifty
